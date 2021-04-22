@@ -1,9 +1,9 @@
 public class Human {
-    private String name;
-    private int strength;
-    private int health;
-    private int stealth;
-    private int intelligence;
+    protected String name;
+    protected int strength;
+    protected int health;
+    protected int stealth;
+    protected int intelligence;
 
 
     public Human(String name) {
