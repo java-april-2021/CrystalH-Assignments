@@ -1,38 +1,40 @@
-package com.crystal.languages.models;
+package com.crystal.license.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="languages")
-public class Language {
+@Table(name="persons")
+public class Person {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Size(min=1, max=100)
-	private String name;
-	@NotBlank
-	private String creator;
-	@NotNull
-	private int version;
+	private String firstName;
+	@Size(min=3, max=100)
+	private String lastName;
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date createdAt;
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
+	
+	@OneToOne(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private License license;
 	
 	@PrePersist 
 	protected void onCreate() {
@@ -46,65 +48,38 @@ public class Language {
 	
 	
 	
-	public Language() {
+	public Person() {
 		
 	}
-
-
-
-	public Language(String name, String creator, int version) {
+	
+	public Person(String firstName, String lastName) {
 		super();
-		this.name = name;
-		this.creator = creator;
-		this.version = version;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
-
-
 
 	public Long getId() {
 		return id;
 	}
 
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-
-
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-
-
-	public String getCreator() {
-		return creator;
+	public String getLastName() {
+		return lastName;
 	}
 
-
-
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-
-
-	public int getVersion() {
-		return version;
-	}
-
-
-
-	public void setVersion(int version) {
-		this.version = version;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Date getCreatedAt() {
@@ -122,8 +97,12 @@ public class Language {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	
-	
-	
+
+	public License getLicense() {
+		return license;
+	}
+
+	public void setLicense(License license) {
+		this.license = license;
+	}
 }

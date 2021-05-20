@@ -34,4 +34,9 @@ public class LanguageService {
 	public void deleteLanguage(Long id) {
 		this.lRepo.deleteById(id);
 	}
+	
+	public Language createLanguageHTMl(String name, String creator, int version) {
+		Language newLanguage = new Language(name, creator, version);
+		return this.lRepo.save(newLanguage);
+	}
 }
